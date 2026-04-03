@@ -7,7 +7,7 @@ def extraer_datos() -> pd.DataFrame:
     """
     ARGUMENTOS
     """
-    print(f"Proceso de extracción comenzando")
+    print(f"PROCESO DE EXTRACCION COMENZANDO")
 
     df = pd.read_csv(raw_path, encoding = "latin-1",
                      dtype={

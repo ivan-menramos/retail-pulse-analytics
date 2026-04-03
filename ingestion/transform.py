@@ -4,7 +4,7 @@ def transformar_datos(df: pd.DataFrame):
     """
     ARGUMENTOS
     """
-    print("Comenzando proceso de transformación")
+    print("PROCESO DE TRANSFORMACIÓN COMENZANDO")
 
     """
     Eliminamos filas con nulos, la justificación para eliminar description
@@ -29,6 +29,8 @@ def transformar_datos(df: pd.DataFrame):
 
     df["Description"] = df["Description"].str.strip().str.upper()
     df["Country"] = df["Country"].str.strip()
+    # transform.py — agregar esta línea antes de separar los DataFrames
+    df["StockCode"] = df["StockCode"].str.upper().str.strip()
 
 
     #Lo siguiente es separar en tres DataFrames
@@ -44,8 +46,9 @@ def transformar_datos(df: pd.DataFrame):
 
     #products
     products = (
-        df[["StockCode","Description"]]
-        .drop_duplicates(subset="StockCode")
+        df.dropna(subset=["Description"])
+        .groupby("StockCode",as_index=False)
+        .agg(description = ("Description","first"))
         .rename(columns = {"StockCode" : "stock_code","Description" : "description"})
         .reset_index(drop = True)
     )

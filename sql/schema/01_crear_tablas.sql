@@ -18,17 +18,23 @@ CREATE TABLE products (
 GO
 
 CREATE TABLE orders (
+    order_line_id INT NOT NULL IDENTITY(1,1),
     order_id NVARCHAR(20) NOT NULL,
     stock_code NVARCHAR(20) NOT NULL,
-    customer_id INT,
-    quantity INT NOT NULL,
+    customer_id INT  NULL,
+    quantity  INT NOT NULL,
     unit_price DECIMAL(10, 2)  NOT NULL,
     invoice_date DATETIME NOT NULL,
     is_cancelled BIT NOT NULL DEFAULT 0,
 
-    CONSTRAINT pk_orders PRIMARY KEY (order_id, stock_code),
+    CONSTRAINT pk_orders PRIMARY KEY (order_line_id),
 
     CONSTRAINT fk_orders_products FOREIGN KEY (stock_code) REFERENCES products(stock_code),
 
     CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+
+    CONSTRAINT chk_orders_quantity CHECK (quantity <> 0),
+
+    CONSTRAINT chk_orders_unit_price CHECK (unit_price >= 0)
 );
+
