@@ -14,16 +14,17 @@ WITH source AS (
 renamed AS (
     SELECT
         order_line_id,
-        order_id AS [invoice number],
-        stock_code AS [product id],
+        order_id AS invoice_number,
+        stock_code AS product_id,
         customer_id,
         quantity,
         unit_price,
-        CAST(quantity * unit_price AS DECIMAL(10,2)) AS [line total],
+        CAST(quantity * unit_price AS DECIMAL(10,2)) AS line_total,
         invoice_date,
         CAST(invoice_date AS DATE) AS invoiced_date,
         is_cancelled
     FROM source
+    WHERE stock_code <> 'B'
 
 )
 

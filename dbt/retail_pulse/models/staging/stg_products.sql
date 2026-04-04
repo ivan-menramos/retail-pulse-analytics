@@ -10,7 +10,8 @@ renamed AS (
         TRIM(description) AS product_name
     FROM source
     WHERE description NOT LIKE '%TEST%'
-        AND description NOT LIKE '%ADJUST%'       
+        AND description NOT LIKE '%ADJUST%'  
+        AND stock_code <> 'B'     
 )
 
 SELECT * FROM renamed

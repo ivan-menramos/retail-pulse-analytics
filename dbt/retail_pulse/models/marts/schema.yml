@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Tabla de hechos con todas las líneas de orden"
+    columns:
+      - name: order_line_id
+        description: "ID único de línea de orden"
+        tests:
+          - unique
+          - not_null
+
+      - name: revenue
+        description: "Revenue de la línea, 0 si es cancelada"
+        tests:
+          - not_null
+
+  - name: dim_customers
+    description: "Dimensión de clientes con segmentación RFM"
+    columns:
+      - name: customer_id
+        description: "ID único del cliente"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_segment
+        description: "Segmento RFM del cliente"
+        tests:
+          - accepted_values:
+              values: ['Champion', 'Loyal', 'Potential Loyalist', 'At Risk', 'Lost', 'Needs Attention']
+
+  - name: dim_products
+    description: "Dimensión de productos con clasificación ABC"
+    columns:
+      - name: product_id
+        description: "ID único del producto"
+        tests:
+          - unique
+          - not_null
+
+      - name: abc_category
+        description: "Clasificación ABC del producto"
+        tests:
+          - accepted_values:
+              values: ['A', 'B', 'C']

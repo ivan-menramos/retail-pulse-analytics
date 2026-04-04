@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Clientes únicos del dataset UK Online Retail"
+    columns:
+      - name: customer_id
+        description: "ID único del cliente"
+        tests:
+          - unique
+          - not_null
+
+      - name: country
+        description: "País del cliente"
+        tests:
+          - not_null
+
+      - name: market_type
+        description: "domestic o international"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['domestic', 'international']
+
+  - name: stg_products
+    description: "Productos únicos del dataset"
+    columns:
+      - name: product_id
+        description: "Código único del producto"
+        tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: "Descripción del producto"
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: "Líneas de orden del dataset"
+    columns:
+      - name: order_line_id
+        description: "ID único de línea de orden"
+        tests:
+          - unique
+          - not_null
+
+      - name: product_id
+        description: "FK hacia stg_products"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
