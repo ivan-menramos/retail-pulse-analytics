@@ -26,9 +26,9 @@ rfm_scores AS (
         frequency,
         monetary,
 
-        NTILE(4) OVER (ORDER BY recency_days ASC) AS r_score,
-        NTILE(4) OVER (ORDER BY frequency DESC) AS f_score,
-        NTILE(4) OVER (ORDER BY monetary DESC) AS m_score
+        NTILE(4) OVER (ORDER BY recency_days DESC) AS r_score, -- DESC: días altos=score bajo=peor
+        NTILE(4) OVER (ORDER BY frequency ASC)     AS f_score, -- ASC: frecuencia alta=score alto=mejor  
+        NTILE(4) OVER (ORDER BY monetary ASC)      AS m_score  -- ASC: monetary alto=score alto=mejor
     FROM rfm
 ),
 
@@ -46,10 +46,10 @@ segmented AS (
 
         CASE
             WHEN r_score = 4 AND f_score = 4 THEN 'Champion'
-            WHEN r_score >= 3 AND f_score >= 3 THEN 'Loyal'
-            WHEN r_score >= 3 AND f_score <= 2 THEN 'Potential Loyalist'
-            WHEN r_score <= 2 AND f_score >= 3 THEN 'At Risk'
-            WHEN r_score = 1 AND f_score = 1 THEN 'Lost'
+            WHEN r_score >= 3 AND f_score >= 3  THEN 'Loyal'
+            WHEN r_score >= 3 AND f_score < 3  THEN 'Potential Loyalist'
+            WHEN r_score < 3  AND f_score >= 3  THEN 'At Risk'
+            WHEN r_score = 1  AND f_score = 1  THEN 'Lost'
             ELSE 'Needs Attention'
         END AS customer_segment
     FROM rfm_scores
