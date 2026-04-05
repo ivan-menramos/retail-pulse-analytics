@@ -13,7 +13,7 @@ Este proyecto construye el pipeline completo desde los datos crudos hasta un das
 
 ## Arquitectura
 
-![Arquitectura](imagenes_de_comprobaciones/dbt_lineage.png)
+![Arquitectura](imagenes_de_comprobaciones/Lineage-Graph.png)
 
 | Capa | Herramienta | Descripción |
 |---|---|---|
