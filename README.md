@@ -52,7 +52,7 @@ Este proyecto construye el pipeline completo desde los datos crudos hasta un das
 
 ## Estructura del proyecto
 
-\`\`\`
+```
 retail-pulse-analytics/
 ├── data/
 │   ├── raw/                    # Dataset original sin modificar
@@ -72,7 +72,7 @@ retail-pulse-analytics/
 │   └── 01_eda.ipynb            # EDA, RFM y análisis ABC
 └── dashboard/
     └── retail_pulse.pbix       # Dashboard Power BI
-\`\`\`
+```
 
 
 ## Dataset
